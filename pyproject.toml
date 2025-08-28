@@ -10,6 +10,6 @@ Repository = "https://github.com/Saganaki22/ComfyUI-dotWaveform"
 #  Used by Comfy Registry https://comfyregistry.org
 
 [tool.comfy]
-PublisherId = "dotWaveform"
+PublisherId = "saganaki22"
 DisplayName = "ComfyUI-dotWaveform"
 Icon = "https://avatars.githubusercontent.com/u/84208527"
