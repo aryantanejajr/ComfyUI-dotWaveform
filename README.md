@@ -21,7 +21,7 @@ A ComfyUI node that generates animated dotted waveform visualizations from audio
 
 ### ComfyUI Manager (Recommended)
 1. Open ComfyUI Manager
-2. Search for "ComfyUI-dotWaveform"
+2. Search for "dotWaveform"
 3. Click Install
 4. Restart ComfyUI
 
