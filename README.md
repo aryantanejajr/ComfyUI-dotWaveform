@@ -1,3 +1,5 @@
+![0000_00018](https://github.com/user-attachments/assets/e08d3f3e-23e6-445a-88da-29ee09f6f2b1)
+
 # ComfyUI Dotted Waveform Visualizer 🎵
 
 [![GitHub Stars](https://img.shields.io/github/stars/Saganaki22/ComfyUI-dotWaveform?style=for-the-badge&logo=github)](https://github.com/Saganaki22/ComfyUI-dotWaveform/stargazers)
@@ -7,8 +9,6 @@
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Compatible-brightgreen?style=for-the-badge)](https://github.com/comfyanonymous/ComfyUI)
 
 A ComfyUI node that generates animated dotted waveform visualizations from audio input with multiple animation styles including teardrop-shaped bars.
-
-![0000_00018](https://github.com/user-attachments/assets/e08d3f3e-23e6-445a-88da-29ee09f6f2b1)
 
 
 ## ✨ Features
