@@ -8,6 +8,9 @@
 
 A ComfyUI node that generates animated dotted waveform visualizations from audio input with multiple animation styles including teardrop-shaped bars.
 
+![0000_00018](https://github.com/user-attachments/assets/e08d3f3e-23e6-445a-88da-29ee09f6f2b1)
+
+
 ## ✨ Features
 
 - **Four Animation Styles**: Scrolling, breathing, radial, and bars
@@ -16,6 +19,8 @@ A ComfyUI node that generates animated dotted waveform visualizations from audio
 - **HD Output**: Up to 1920x1920 resolution support
 - **Variable Opacity**: Uniform, 3-level, 5-level, or 10-level opacity modes
 - **Preview Mode**: Fast sine wave preview for testing settings
+
+  <img width="1171" height="921" alt="image_2025-08-28_21-54-53" src="https://github.com/user-attachments/assets/16e4cfd2-59e8-4ecd-9e5e-cde78d734bce" />
 
 ## 📋 Installation
 
