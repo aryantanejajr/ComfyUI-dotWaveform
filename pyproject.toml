@@ -1,5 +1,5 @@
 [project]
-name = "dotWaveform"
+name = "ComfyUI-dotWaveform"
 description = "ComfyUI node for generating animated dotted waveform visualizations with multiple animation styles including teardrop bars"
 version = "1.0.2"
 license = {file = "LICENSE"}
@@ -11,5 +11,5 @@ Repository = "https://github.com/Saganaki22/ComfyUI-dotWaveform"
 
 [tool.comfy]
 PublisherId = "saganaki22"
-DisplayName = "ComfyUI-dotWaveform"
+DisplayName = "dotWaveform"
 Icon = "https://avatars.githubusercontent.com/u/84208527"
