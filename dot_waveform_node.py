@@ -144,7 +144,91 @@ class DottedWaveformVisualizer:
 
     def load_audio_with_fallback(self, audio_data: Dict[str, Any]) -> Tuple[np.ndarray, int]:
         try:
-            if isinstance(audio_data, dict):
+            # Handle LazyAudioMap from VideoHelperSuite
+            if hasattr(audio_data, '__class__') and 'LazyAudioMap' in str(type(audio_data)):
+                print("Detected LazyAudioMap from VideoHelperSuite, converting...")
+                
+                # First, try to inspect the LazyAudioMap object
+                print(f"LazyAudioMap attributes: {[attr for attr in dir(audio_data) if not attr.startswith('_')]}")
+                
+                waveform = None
+                sample_rate = 22050
+                
+                # Method 1: Try calling it as a function
+                try:
+                    waveform = audio_data()
+                    print(f"Method 1 (call): Success - {type(waveform)}")
+                except Exception as e:
+                    print(f"Method 1 (call) failed: {e}")
+                
+                # Method 2: Try accessing common attributes
+                if waveform is None:
+                    for attr_name in ['waveform', 'audio', 'data', 'tensor']:
+                        try:
+                            waveform = getattr(audio_data, attr_name)
+                            print(f"Method 2 (attr '{attr_name}'): Success - {type(waveform)}")
+                            break
+                        except Exception as e:
+                            print(f"Method 2 (attr '{attr_name}') failed: {e}")
+                
+                # Method 3: Try dictionary-like access (LazyAudioMap acts like a dict)
+                if waveform is None:
+                    try:
+                        # Get available keys
+                        if hasattr(audio_data, 'keys'):
+                            available_keys = list(audio_data.keys())
+                            print(f"Available LazyAudioMap keys: {available_keys}")
+                            
+                            # Try common audio keys
+                            for key in ['waveform', 'audio', 'data', 'tensor']:
+                                if key in available_keys:
+                                    waveform = audio_data.get(key)
+                                    print(f"Method 3 (dict key '{key}'): Success - {type(waveform)}")
+                                    break
+                            
+                            # If no common keys found, try the first available key
+                            if waveform is None and available_keys:
+                                first_key = available_keys[0]
+                                waveform = audio_data.get(first_key)
+                                print(f"Method 3 (dict first key '{first_key}'): Success - {type(waveform)}")
+                    except Exception as e:
+                        print(f"Method 3 (dict access) failed: {e}")
+                
+                # Method 4: Try slicing (LazyAudioMap might support indexing)
+                if waveform is None:
+                    try:
+                        # Try to get all data using slice notation
+                        waveform = audio_data[:]
+                        print(f"Method 4 (slice): Success - {type(waveform)}")
+                    except Exception as e:
+                        print(f"Method 4 (slice) failed: {e}")
+                
+                # Method 5: Try to convert to tensor directly
+                if waveform is None:
+                    try:
+                        # Check if it's iterable and has length
+                        if hasattr(audio_data, '__len__') and hasattr(audio_data, '__getitem__'):
+                            # Try to access as array-like
+                            waveform = torch.tensor([float(x) for x in audio_data])
+                            print(f"Method 5 (array-like): Success - shape {waveform.shape}")
+                    except Exception as e:
+                        print(f"Method 5 (array-like) failed: {e}")
+                
+                # Get sample rate
+                try:
+                    sample_rate = getattr(audio_data, 'sample_rate', 22050)
+                    if not isinstance(sample_rate, (int, float)):
+                        sample_rate = 22050
+                except:
+                    sample_rate = 22050
+                
+                # If we still don't have waveform data, create fallback
+                if waveform is None:
+                    print("All LazyAudioMap conversion methods failed, using fallback")
+                    return np.zeros(1024), 22050
+                    
+                print(f"LazyAudioMap converted successfully - Type: {type(waveform)}, Sample rate: {sample_rate}")
+            elif isinstance(audio_data, dict):
                 if 'waveform' in audio_data and 'sample_rate' in audio_data:
                     waveform = audio_data['waveform']
                     sample_rate = audio_data['sample_rate']
@@ -161,11 +245,13 @@ class DottedWaveformVisualizer:
                 waveform = audio_data
                 sample_rate = 22050
             
+            # Convert to numpy array
             if isinstance(waveform, torch.Tensor):
-                audio_np = waveform.numpy()
+                audio_np = waveform.detach().cpu().numpy()
             else:
-                audio_np = waveform
+                audio_np = np.array(waveform, dtype=np.float32)
                 
+            # Handle different tensor shapes
             if len(audio_np.shape) == 3:
                 audio_np = audio_np[0]
             
@@ -174,6 +260,7 @@ class DottedWaveformVisualizer:
             elif len(audio_np.shape) == 2:
                 audio_np = audio_np[0]
                 
+            print(f"Final audio shape: {audio_np.shape}, Sample rate: {sample_rate}")
             return audio_np, sample_rate
             
         except Exception as e:
