@@ -1,4 +1,5 @@
-![0000_00018](https://github.com/user-attachments/assets/e08d3f3e-23e6-445a-88da-29ee09f6f2b1)
+
+![AnimateDiff_00019](https://github.com/user-attachments/assets/583a5fdf-add2-48f8-9226-aa2b873e0b3d)
 
 # ComfyUI Dotted Waveform Visualizer 🎵
 
@@ -8,19 +9,21 @@
 [![Python Version](https://img.shields.io/badge/python-3.9%2B-blue?style=for-the-badge&logo=python)](https://python.org)
 [![ComfyUI](https://img.shields.io/badge/ComfyUI-Compatible-brightgreen?style=for-the-badge)](https://github.com/comfyanonymous/ComfyUI)
 
-A ComfyUI node that generates animated dotted waveform visualizations from audio input with multiple animation styles including teardrop-shaped bars.
+A ComfyUI node that generates animated dotted waveform visualizations from audio input with multiple animation styles.
 
 
 ## ✨ Features
 
-- **Four Animation Styles**: Scrolling, breathing, radial, and bars
+- **Five Animation Styles**: Scrolling, breathing, radial, bars, and wave
 - **Teardrop Bars**: Bell curve shape with sharp edges using exponential decay
 - **Audio Passthrough**: Compatible with VideoHelperSuite Video Combine
 - **HD Output**: Up to 1920x1920 resolution support
 - **Variable Opacity**: Uniform, 3-level, 5-level, or 10-level opacity modes
-- **Preview Mode**: Fast sine wave preview for testing settings
+- **Enhanced Max Height**: Up to 150% of image height for taller waveforms
+- **Preview Mode**: Fast preview for testing settings without audio processing
 
-  <img width="1171" height="921" alt="image_2025-08-28_21-54-53" src="https://github.com/user-attachments/assets/16e4cfd2-59e8-4ecd-9e5e-cde78d734bce" />
+
+<img width="1050" height="870" alt="image_2025-08-30_20-10-15" src="https://github.com/user-attachments/assets/21fd35c0-063c-4888-ae4f-833431e00b75" />
 
 ## 📋 Installation
 
@@ -45,13 +48,13 @@ A ComfyUI node that generates animated dotted waveform visualizations from audio
 | **spacing** | 3 | 1-40 | Distance between dot/bar centers |
 | **dot_color** | #00FFFF | Hex | Color of waveform elements |
 | **background_color** | #000000 | Hex | Background color |
-| **animation_style** | scrolling | 4 options | Animation type |
-| **max_height** | 60 | 5-110 | Maximum waveform size as % of image height |
+| **animation_style** | scrolling | 5 options | Animation type |
+| **max_height** | 60 | 5-150 | Maximum waveform size as % of image height |
 | **fps** | 10 | 1-60 | Animation frames per second |
 | **max_frames** | 300 | 0-1000 | Frame limit (0 = unlimited) |
 | **opacity_mode** | uniform | 4 levels | Dot opacity variation |
 | **window_size** | 2.0 | 0.1-10.0 | Time window for scrolling (seconds) |
-| **preview_mode** | False | Boolean | Fast sine wave preview |
+| **preview_mode** | False | Boolean | Fast preview without audio processing |
 
 ## 🎨 Animation Styles
 
@@ -62,6 +65,8 @@ A ComfyUI node that generates animated dotted waveform visualizations from audio
 **Radial**: Concentric rings expand from center creating ripple effects
 
 **Bars**: Vertical frequency bars with teardrop bell curve shape and 2x enhanced height response
+
+**Wave**: Multiple layered sine wave patterns that morph with audio intensity
 
 ## 🎭 Opacity Modes
 
@@ -78,6 +83,13 @@ A ComfyUI node that generates animated dotted waveform visualizations from audio
 - **Output**: RGB image sequences compatible with video nodes
 
 ## 📝 Changelog
+
+### Version 1.0.5
+- Added wave animation style with multiple layered sine patterns
+- Increased max_height range to 150% (was 110%) for taller waveforms
+- Fixed all preview modes to correctly display each animation style
+- Improved tooltips and parameter organization
+- Enhanced wave animation with proper audio responsiveness
 
 ### Version 1.0.0 (Initial Release)
 - Four animation styles: scrolling, breathing, radial, and bars
