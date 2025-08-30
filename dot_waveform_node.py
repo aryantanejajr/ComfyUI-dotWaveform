@@ -22,6 +22,7 @@ def safe_hex_to_rgb(hex_color: str, fallback: Tuple[int, int, int] = (0, 255, 25
     except:
         return fallback
 
+
 class DottedWaveformVisualizer:
     
     DESCRIPTION = "Creates animated dotted waveform visualizations from audio input with customizable appearance, colors, and animation styles"
@@ -85,13 +86,13 @@ class DottedWaveformVisualizer:
                     "tooltip": "Hex color for background. Examples: #000000 (black), #FFFFFF (white), #333333 (dark gray)"
                 }),
                 
-                "animation_style": (["scrolling", "breathing", "radial", "bars"], {
-                    "tooltip": "SCROLLING: Continuous waveform with center line. BREATHING: All dots pulse together. RADIAL: Concentric rings expand. BARS: Frequency bars with high amplitude in center."
+                "animation_style": (["scrolling", "breathing", "radial", "bars", "wave"], {
+                    "tooltip": "Choose animation style. SCROLLING: Continuous waveform. BREATHING: Pulsing dots. RADIAL: Expanding rings. BARS: Frequency bars. WAVE: Sine wave patterns."
                 }),
                 "max_height": ("INT", {
                     "default": 60,
                     "min": 5,
-                    "max": 110,
+                    "max": 150,
                     "step": 5,
                     "display": "slider",
                     "tooltip": "Maximum waveform size as % of image height. Higher = taller waveforms. Affects all animation styles including radial radius."
@@ -737,6 +738,55 @@ class DottedWaveformVisualizer:
         
         return frames
 
+
+    def generate_wave_animation(self, audio_np, sample_rate, width, height, size, spacing, 
+                              dot_color, bg_color, max_height, fps, max_frames, opacity_mode, **kwargs):
+        frames = []
+        max_vis_height = (height * max_height) // 200
+        
+        frame_duration = len(audio_np) / sample_rate
+        frame_count = min(int(frame_duration * fps), max_frames) if max_frames > 0 else int(frame_duration * fps)
+        
+        num_waves = 3
+        wave_colors = [dot_color, dot_color, dot_color]
+        
+        for frame_idx in range(frame_count):
+            time_offset = (frame_idx / fps) if fps > 0 else 0
+            sample_idx = int(time_offset * sample_rate)
+            
+            if sample_idx < len(audio_np):
+                amplitude = abs(audio_np[sample_idx])
+            else:
+                amplitude = 0
+            
+            img = Image.new('RGB', (width, height), bg_color)
+            draw = ImageDraw.Draw(img)
+            
+            for wave_idx in range(num_waves):
+                wave_offset = wave_idx * math.pi * 0.5
+                wave_amplitude = amplitude * (0.8 - wave_idx * 0.2)
+                
+                for x in range(0, width, spacing):
+                    wave_phase = (x / width) * 4 * math.pi + time_offset * 3 + wave_offset
+                    y = height // 2 + math.sin(wave_phase) * max_vis_height * wave_amplitude
+                    
+                    if 0 <= y < height:
+                        local_amplitude = wave_amplitude * (0.5 + 0.5 * math.sin(wave_phase))
+                        
+                        if opacity_mode in ["3_levels", "5_levels", "10_levels"]:
+                            levels = 3 if opacity_mode == "3_levels" else (5 if opacity_mode == "5_levels" else 10)
+                            point_color = self.get_discrete_opacity_color(wave_colors[wave_idx], bg_color, local_amplitude, levels)
+                        else:
+                            point_color = wave_colors[wave_idx]
+                        
+                        draw.ellipse([x-size//2, y-size//2, x+size//2, y+size//2], fill=point_color)
+            
+            frame_array = np.array(img).astype(np.float32) / 255.0
+            frames.append(torch.from_numpy(frame_array).unsqueeze(0))
+        
+        return frames
+
+
     def generate_preview(self, width, height, size, spacing, 
                         dot_color, bg_color, animation_style, max_height, opacity_mode, window_size):
         
@@ -836,6 +886,32 @@ class DottedWaveformVisualizer:
                 y_end = center_y + bar_height // 2
                 
                 draw.rectangle([x - size//2, y_start, x + size//2, y_end], fill=bar_color)
+        
+        elif animation_style == "wave":
+            fake_amplitude = 0.6
+            max_vis_height = (height * max_height) // 200
+            
+            num_waves = 3
+            wave_colors = [dot_color, dot_color, dot_color]
+            
+            for wave_idx in range(num_waves):
+                wave_offset = wave_idx * math.pi * 0.5
+                wave_amplitude = fake_amplitude * (0.8 - wave_idx * 0.2)
+                
+                for x in range(0, width, spacing):
+                    wave_phase = (x / width) * 4 * math.pi + wave_offset
+                    y = height // 2 + math.sin(wave_phase) * max_vis_height * wave_amplitude
+                    
+                    if 0 <= y < height:
+                        local_amplitude = wave_amplitude * (0.5 + 0.5 * math.sin(wave_phase))
+                        
+                        if opacity_mode in ["3_levels", "5_levels", "10_levels"]:
+                            levels = 3 if opacity_mode == "3_levels" else (5 if opacity_mode == "5_levels" else 10)
+                            point_color = self.get_discrete_opacity_color(wave_colors[wave_idx], bg_color, local_amplitude, levels)
+                        else:
+                            point_color = wave_colors[wave_idx]
+                        
+                        draw.ellipse([x-size//2, y-size//2, x+size//2, y+size//2], fill=point_color)
                         
         else:
             center_x = width // 2
@@ -909,7 +985,12 @@ class DottedWaveformVisualizer:
                 frames = self.generate_bars_animation(audio_np, sample_rate, width, height,
                                                     size, spacing, max_height, fps,
                                                     final_color, final_bg_color, opacity_mode, max_frames)
+            elif animation_style == "wave":
+                frames = self.generate_wave_animation(audio_np, sample_rate, width, height,
+                                                    size, spacing, final_color, final_bg_color, 
+                                                    max_height, fps, max_frames, opacity_mode)
             else:
+                # Default to radial for backwards compatibility
                 frames = self.generate_radial_animation(audio_np, sample_rate, width, height,
                                                       size, spacing, max_height, fps,
                                                       final_color, final_bg_color, opacity_mode, max_frames)
